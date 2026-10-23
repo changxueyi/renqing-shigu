@@ -559,7 +559,7 @@ function parseReadme(md){
 /* ---------- 术语表 ---------- */
 let GLOSS = [];   // [{term, meaning, re}]
 function parseGlossary(md){
-  const m = /^## 读懂数字[^\n]*\n([\s\S]*?)(?=^## )/m.exec(md);
+  const m = /^## (?:读懂数字|术语表)[^\n]*\n([\s\S]*?)(?=^## )/m.exec(md);
   if (!m) return [];
   const rows = [];
   for (const line of m[1].split(/\r?\n/)){
@@ -775,7 +775,7 @@ const NUMS = '[\\d、]+(?:\\s*到\\s*\\d+)?';
 // 最后那一段认「见第 9 节」「走第 8、9 节的法律路径」这种不带条号的整节指路，
 // 全书有 135 处，以前一律是死字（2026-09-20 用户在第 5 节撞到的「（见第 9 节）」）。
 // 它必须排在最后：前面几段先吃掉「第 9 节第 3 条」，剩下的才轮到它。
-const XREF_RE = new RegExp(`第\\s*(\\d+)\\s*节第\\s*(${NUMS})\\s*条|本节第\\s*(${NUMS})\\s*条|第\\s*(${NUMS})\\s*条|第\\s*([\\d、]+)\\s*节`, 'g');
+const XREF_RE = new RegExp(`第\\s*(\\d+)\\s*[节章]第\\s*(${NUMS})\\s*条|本节第\\s*(${NUMS})\\s*条|第\\s*(${NUMS})\\s*条|第\\s*([\\d、]+)\\s*[节章]`, 'g');
 // 「8 到 10」摊成 8、9、10；上限 40 是防着把法条条款号那种大范围摊成几百个键
 const xrefKeys = (sec, spec) => {
   const ns = [];
