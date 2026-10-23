@@ -1060,9 +1060,9 @@ function build(sections){
       const add = (cls, text) => { const t=document.createElement('span'); t.className='badge '+cls; t.textContent=text; badges.appendChild(t); };
       if (e.ratio) { const t = document.createElement('span'); t.className = 'badge r' + ({'极高':'3','高':'2','一般':'1'}[e.ratio]);
         t.textContent = '性价比 ' + e.ratio;
-        t.title = '作者判断：由收益量级（' + e.level + '）和三项成本合成，只在同一口径（' + LENS_LABEL[e.lens] + '）内可比，与证据等级无关';
+        t.title = '作者判断：由收益量级（' + e.level + '）和三项成本合成，只在同一口径（' + LENS_LABEL[e.lens] + '）内可比，与依据等级无关';
         badges.appendChild(t); }
-      add(e.grade, `证据 ${e.grade} 级`);
+      add(e.grade, `依据 ${e.grade} 级`);
       if (e.lens) add('plain', LENS_LABEL[e.lens] || e.lens);
       for (const d of ['money','time','will']) if (e[d]) add('plain', LABEL[d][e[d]] || e[d]);
       if (e.who.length) add('plain', '适用：' + e.who.map(g => g.map(v => WHO_LABEL[v] || v).join('且').replace(/且(\d)/g, '且 $1')).join('、'));
