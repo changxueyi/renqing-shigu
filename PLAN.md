@@ -1,6 +1,6 @@
 # 编写计划与大纲
 
-《中国人：人情世故指南》的编写计划。正文全部原创，网页框架改自 [HowToLiveBetter](https://github.com/eternity4719/HowToLiveBetter)（MIT 许可）。
+《人情世故指南》的编写计划。正文全部原创，网页框架改自 [HowToLiveBetter](https://github.com/eternity4719/HowToLiveBetter)（MIT 许可）。
 
 ## 一、定位
 

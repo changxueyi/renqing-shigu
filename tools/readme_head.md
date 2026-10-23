@@ -1,8 +1,28 @@
-# 中国人：人情世故指南
+<div align="center">
 
-讲清规则，也讲清人心。全书 {{CHAPTERS}} 章 {{TOTAL}} 条，每条写明花掉什么、怎么做、怎么说、换回什么、红线与例外、依据等级和出处。
+<img src="og.png" alt="人情世故指南：讲清规则，也讲清人心" width="820">
 
-在线阅读与检索：<https://changxueyi.github.io/renqing-shigu/>
+# 人情世故指南
+
+**讲清规则，也讲清人心。**
+
+每一条都回答三个问题：这件事背后的规矩是什么，怎么做、怎么说，红线在哪里。<br>
+全书 {{CHAPTERS}} 章 {{TOTAL}} 条，每条写明花掉什么、怎么做、怎么说、换回什么、红线与例外、依据等级和出处。
+
+[![在线检索](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E6%A3%80%E7%B4%A2-%E7%82%B9%E8%BF%99%E9%87%8C%E6%89%93%E5%BC%80-b4232c?style=flat-square)](https://changxueyi.github.io/renqing-shigu/)
+[![条目](https://img.shields.io/badge/%E6%9D%A1%E7%9B%AE-{{CHAPTERS}}%20%E7%AB%A0%20%C2%B7%20{{TOTAL}}%20%E6%9D%A1-18794e?style=flat-square)](#目录)
+[![依据等级](https://img.shields.io/badge/%E4%BE%9D%E6%8D%AE%E7%AD%89%E7%BA%A7-A%20{{A}}%20%C2%B7%20B%20{{B}}%20%C2%B7%20C%20{{C}}-915930?style=flat-square)](docs/核实记录/)
+[![许可](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF-CC%20BY%204.0-565a5f?style=flat-square)](#许可)
+
+### [打开在线检索页](https://changxueyi.github.io/renqing-shigu/) · [人情世故的大道理](docs/人情世故的大道理.md) · [案例集](docs/案例集.md) · [话术速查](docs/话术速查.md)
+
+</div>
+
+**知世故而不世故**：这里讲面子、人情、关系怎么运转，也把行贿、操控、PUA、杀猪盘这类灰色和黑色的套路摊开讲——讲它们，是为了让你认得出、躲得开、维得了权，不是教你用。
+
+**不用全做**：这是一份备选单，不是任务清单。挑走一两条就算数，剩下的需要时再回来查。在线检索页可以按场景章节、换回什么、依据等级、花不花钱、要不要拉下脸筛选。
+
+人情世故南北不同、城乡不同、家家不同。涉及法律、钱和人身安全的事，以法律条文、当地部门和律师的说法为准。发现写错了，欢迎[提 issue](https://github.com/changxueyi/renqing-shigu/issues)。
 
 ## 术语表
 
