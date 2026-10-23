@@ -188,16 +188,10 @@ html.dark .switch .sun{display:none} html.dark .switch .moon{display:block}
 .doc{max-width:900px;margin:0 auto}
 .doc-head{margin-bottom:28px}
 .doc-head h1{font-size:32px;line-height:40px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px}
-/* 页首大标题：品牌小字 + 两行粗体口号，第二行重点词用主题色 */
-.hero{position:relative;overflow:hidden;margin:0 0 18px;padding:26px 30px 28px;border:1px solid var(--divider);border-radius:14px;background:radial-gradient(ellipse 55% 120% at 100% 0%,var(--brand-soft),transparent 72%),var(--bg)}
-.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--divider) 1px,transparent 1px),linear-gradient(90deg,var(--divider) 1px,transparent 1px);background-size:26px 26px;opacity:.5;-webkit-mask-image:linear-gradient(100deg,#000 0%,transparent 75%);mask-image:linear-gradient(100deg,#000 0%,transparent 75%)}
-.hero>*{position:relative}
-.hero-brand{display:flex;align-items:center;gap:8px;margin:0 0 14px;font-size:13px;font-weight:600;color:var(--t2)}
-.hero-brand .logo{width:20px;height:20px;border-radius:5px}
-.hero-brand .logo svg{width:12px;height:12px}
-.doc-head h1.hero-title{margin:0;font-size:44px;line-height:1.28;font-weight:800;letter-spacing:.01em;color:var(--t1)}
-.hero-title em{font-style:normal;color:var(--brand-1)}
-.doc-head .hero+p{margin-top:2px}
+/* 页首封面：直接用仓库根目录的 og.png（源文件 tools/cover.html），标题文字留给读屏软件 */
+.hero{margin:0 0 18px;border:1px solid var(--divider);border-radius:14px;overflow:hidden;background:#fff}
+.hero-img{display:block;width:100%;height:auto}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .doc-head p{margin:0;color:var(--t2);font-size:16px}
 .doc-head .stat{color:var(--t3);font-size:14px;margin-top:6px}
 .doc-head .stat b{color:var(--brand-1);font-weight:600}
@@ -329,8 +323,7 @@ abbr.term:hover{border-bottom-color:var(--brand-1);color:var(--brand-1)}
   .backdrop.on{opacity:1;pointer-events:auto}
   .content{padding:calc(var(--nav-h) + 24px) 20px 96px}
   .doc-head h1{font-size:26px;line-height:34px}
-  .doc-head h1.hero-title{font-size:32px;line-height:1.3}
-  .hero{padding:20px 18px 22px}
+  .hero{border-radius:10px}
   .card{padding:18px 16px 14px;border-radius:10px}
   .card-h h3{font-size:16px;line-height:24px}
   .card-h .idx{line-height:24px}
@@ -498,8 +491,8 @@ abbr.term:hover{border-bottom-color:var(--brand-1);color:var(--brand-1)}
   <div class="doc">
     <div class="doc-head">
       <div class="hero">
-        <div class="hero-brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>人情世故指南</div>
-        <h1 class="hero-title">讲清规则，<br>也讲清<em>人心</em></h1>
+        <h1 class="sr-only">人情世故指南：讲清规则，也讲清人心</h1>
+        <img class="hero-img" src="og.png" width="1200" height="630" decoding="async" fetchpriority="high" alt="人情世故指南：讲清规则，也讲清人心。31 章、640 条，每条写明规矩、做法、话术与红线。">
       </div>
       <p>每一条都回答三个问题：这件事背后的规矩是什么，怎么做、怎么说，红线在哪里。</p>
       <p>知世故而不世故：这里讲面子、人情、关系怎么运转，也把行贿、操控、PUA、杀猪盘这类灰色和黑色的套路摊开讲——讲它们，是为了让你认得出、躲得开、维得了权，不是教你用。</p>
