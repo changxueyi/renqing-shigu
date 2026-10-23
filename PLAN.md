@@ -51,7 +51,17 @@
 ## 五、进度
 
 - [x] 搭网页框架、定条目格式与大纲
-- [ ] 第一至第八部分正文（31 章，按章节文件逐章完成，以 book/ 目录为准）
-- [ ] 长文：大道理、案例集、话术速查
-- [ ] 核实记录与红线复查
+- [x] 第一至第八部分正文：31 章、640 条（A 级 204 条、B 级 67 条、C 级 369 条）
+- [x] 长文：[人情世故的大道理](docs/人情世故的大道理.md)、[案例集](docs/案例集.md)（28 个情景）、[话术速查](docs/话术速查.md)（由 tools/build_phrasebook.py 生成）
+- [x] 核实记录与红线复查：[核实记录](docs/核实记录/README.md)、[依据清单](docs/核实记录/依据清单.md)（由 tools/build_sources.py 生成）
 - [ ] 持续修订：欢迎提 issue
+
+## 六、维护脚本
+
+改完 book/ 下的正文后依次运行：
+
+```bash
+python3 tools/build_readme.py      # 目录、条数、术语表 -> README.md
+python3 tools/build_phrasebook.py  # 每条「怎么说」 -> docs/话术速查.md
+python3 tools/build_sources.py     # A、B 级来源 -> docs/核实记录/依据清单.md
+```
