@@ -114,6 +114,8 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;fill:none;stroke:var(--t3);stroke-width:2;pointer-events:none}
 .search kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font:500 11px/1 var(--font);color:var(--t3);border:1px solid var(--divider);border-radius:4px;padding:3px 6px;background:var(--bg-elv);pointer-events:none}
 .nav-r{display:flex;align-items:center;gap:8px}
+.nav-shortcut{display:inline-flex;align-items:center;height:32px;padding:0 8px;color:var(--brand-1);font-size:13px;font-weight:600;white-space:nowrap}
+.nav-shortcut:hover{color:var(--brand-2);text-decoration:none}
 .icon-btn{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;color:var(--t2);transition:background .25s,color .25s}
 .icon-btn:hover{background:var(--bg-soft);color:var(--t1)}
 .icon-btn svg{width:20px;height:20px;fill:currentColor}
@@ -389,6 +391,7 @@ abbr.term:hover{border-bottom-color:var(--brand-1);color:var(--brand-1)}
       <kbd>/</kbd>
     </label>
     <div class="nav-r">
+      <a class="nav-shortcut" href="scenario-demo.html" title="打开场景应对演示">场景应对</a>
       <a class="icon-btn" href="README.md" title="查看 README.md" aria-label="README"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zm8 1.5V8h4.5zM8 12h8v1.5H8zm0 3.5h8V17H8z"/></svg></a>
       <a class="icon-btn" href="https://github.com/changxueyi/renqing-shigu" target="_blank" rel="noopener" title="在 GitHub 上查看源仓库" aria-label="GitHub 仓库"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 5.6 18.3 6 18.3 6c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></a>
       <button class="switch" id="theme" aria-label="切换深色模式" title="切换深色模式"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button>

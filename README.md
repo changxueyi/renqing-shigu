@@ -14,7 +14,7 @@
 [![依据等级](https://img.shields.io/badge/%E4%BE%9D%E6%8D%AE%E7%AD%89%E7%BA%A7-A%20204%20%C2%B7%20B%2067%20%C2%B7%20C%20369-915930?style=flat-square)](docs/核实记录/)
 [![许可](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF-CC%20BY%204.0-565a5f?style=flat-square)](#许可)
 
-### [打开在线检索页](https://changxueyi.github.io/renqing-shigu/) · [人情世故的大道理](docs/人情世故的大道理.md) · [案例集](docs/案例集.md) · [话术速查](docs/话术速查.md)
+### [打开在线检索页](https://changxueyi.github.io/renqing-shigu/) · [场景应对演示](scenario-demo.html) · [人情世故的大道理](docs/人情世故的大道理.md) · [案例集](docs/案例集.md) · [话术速查](docs/话术速查.md)
 
 </div>
 

@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f2f0">
+<title>场景应对演示 · 人情世故指南</title>
+<meta name="description" content="从真实沟通场景出发，查看不同力度的表达建议、对应指南条目和自保边界。演示在浏览器本地运行，不连接 AI、不保存输入。">
+<link rel="canonical" href="https://changxueyi.github.io/renqing-shigu/scenario-demo.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a92b32'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='38' fill='white' font-family='sans-serif'%3E%E4%BA%BA%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --frame:#f3f2f2;
+  --sheet:#fff;
+  --well:#f8f6f5;
+  --line:#e6e0dd;
+  --rule:#eee9e7;
+  --ink:#282523;
+  --muted:#6d6662;
+  --faint:#766d69;
+  --red:#a92b32;
+  --red-soft:#f8e9e9;
+  --green:#286247;
+  --green-soft:#edf5ef;
+  --amber:#805b20;
+  --amber-soft:#f7f1e4;
+  --radius:8px;
+  --font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{min-width:320px;background:var(--frame);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{margin:0;font-size:14px;line-height:1.6}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:4px}
+[hidden]{display:none!important}
+
+.app{min-height:100vh;display:grid;grid-template-columns:248px minmax(0,1fr);grid-template-rows:52px minmax(0,1fr)}
+.topbar{grid-column:1/-1;grid-row:1;display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--frame)}
+.brand{display:flex;align-items:center;gap:9px;font-weight:650;font-size:14px;white-space:nowrap}
+.brand-mark{display:grid;place-items:center;width:25px;height:25px;border-radius:6px;background:var(--red);color:#fff;font-size:14px;font-weight:700}
+.top-sep{height:18px;border-left:1px solid #d9d1cd}
+.top-context{font-size:13px;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:13px;color:var(--muted)}
+.top-actions a:hover{color:var(--ink)}
+.menu-toggle{display:none;border:0;background:transparent;padding:7px 0;color:var(--muted)}
+
+.sidebar{grid-column:1;grid-row:2;min-height:calc(100vh - 52px);padding:20px 14px 20px 18px;background:var(--frame);display:flex;flex-direction:column}
+.side-heading{margin:5px 8px 8px;color:var(--faint);font-size:13px}
+.case-list{display:grid;gap:3px}
+.case-item{width:100%;min-height:40px;display:flex;align-items:center;gap:10px;text-align:left;padding:7px 9px;border:0;border-radius:6px;background:transparent;color:var(--muted);line-height:1.35}
+.case-item:hover{background:#ededed;color:var(--ink)}
+.case-item[aria-current="true"]{background:#e7e7e7;color:var(--ink);font-weight:600}
+.case-no{width:19px;flex:none;color:#857b76;font:13px/1.4 var(--font);font-variant-numeric:tabular-nums}
+.side-foot{margin-top:auto;padding:15px 8px 0;border-top:1px solid #dfd9d6;color:var(--muted);font-size:13px;line-height:1.65}
+.side-foot a{display:inline-block;margin-top:7px;color:var(--ink);font-weight:600}
+.side-shade{display:none}
+
+.sheet{grid-column:2;grid-row:2;min-width:0;min-height:calc(100vh - 60px);margin:0 8px 8px 0;padding:27px 30px 26px;background:var(--sheet);border:1px solid #e9e4e1;border-radius:16px}
+.content{width:min(100%,1200px);margin:0 auto}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:20px}
+.crumb{margin-bottom:5px;color:var(--faint);font-size:13px}
+.crumb a{color:var(--muted)}
+h1{margin:0;font-size:24px;line-height:1.25;font-weight:650}
+.page-sub{margin-top:6px;color:var(--muted);font-size:14px}
+.demo-stamp{flex:none;padding:4px 8px;border-left:2px solid var(--red);color:var(--muted);font-size:13px;line-height:1.3}
+
+.work-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);gap:16px}
+.panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--sheet);padding:18px 19px}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}
+.step-label{font-size:13px;color:var(--faint);font-variant-numeric:tabular-nums}
+.panel h2{margin:2px 0 0;font-size:16px;line-height:1.4;font-weight:650}
+.text-action{border:0;background:transparent;color:var(--muted);padding:2px 0;font-size:13px}
+.text-action:hover{color:var(--red);text-decoration:underline}
+.scene-label{display:flex;align-items:center;gap:7px;margin-bottom:7px;color:var(--muted);font-size:13px}
+.scene-marker{width:7px;height:7px;border-radius:50%;background:var(--red)}
+.scene-title{margin:0 0 12px;font-size:19px;line-height:1.4;font-weight:620}
+.field-label{display:block;margin:0 0 7px;font-size:13px;font-weight:600}
+textarea{display:block;width:100%;min-height:104px;resize:vertical;padding:11px 12px;border:1px solid #d9d2cf;border-radius:6px;background:#fff;line-height:1.65}
+textarea::placeholder{color:var(--faint)}
+.field-note{display:flex;justify-content:space-between;gap:12px;margin-top:6px;color:var(--faint);font-size:12px}
+.tone-row{display:flex;align-items:center;gap:12px;margin-top:17px}
+.tone-row>span{color:var(--muted);font-size:13px;white-space:nowrap}
+.tone-tabs{display:flex;gap:0;border-bottom:1px solid var(--line)}
+.tone-tab{position:relative;padding:7px 11px;border:0;background:transparent;color:var(--muted);font-size:13px}
+.tone-tab[aria-selected="true"]{color:var(--ink);font-weight:650}
+.tone-tab[aria-selected="true"]::after{position:absolute;right:8px;bottom:-1px;left:8px;height:2px;background:var(--red);content:""}
+.primary{min-height:36px;margin-top:18px;padding:0 15px;border:0;border-radius:6px;background:var(--red);color:#fff;font-weight:600}
+.primary:hover{background:#8f2028}
+.primary:active{transform:translateY(1px)}
+
+.reply-panel{background:#fff}
+.reply-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.reply-head h2{margin:0}
+.copy-btn{min-height:30px;padding:3px 9px;border:1px solid #d9d2cf;border-radius:5px;background:#fff;color:var(--ink);font-size:13px}
+.copy-btn:hover{border-color:var(--red);color:var(--red)}
+.reply-context{margin:0 0 10px;color:var(--muted);font-size:13px}
+.reply-text{min-height:94px;margin:0;padding:13px 14px;border-left:3px solid var(--red);background:var(--well);font-size:15px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere}
+.reply-caption{display:flex;align-items:center;gap:6px;margin-top:11px;color:var(--muted);font-size:13px}
+.reply-caption::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+.followup{display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;margin-top:15px;padding-top:12px;border-top:1px solid var(--rule)}
+.followup-label{color:var(--muted);font-size:13px}
+.followup-text{margin:0;color:var(--ink);font-size:13px;line-height:1.65}
+.live{min-height:18px;margin-top:8px;color:var(--green);font-size:12px}
+
+.plan-panel{background:var(--well)}
+.plan-list{display:grid;gap:0;margin-top:10px}
+.plan-row{display:grid;grid-template-columns:25px minmax(0,1fr);gap:9px;padding:9px 0}
+.plan-row+.plan-row{border-top:1px solid var(--rule)}
+.plan-num{color:var(--red);font-size:13px;font-variant-numeric:tabular-nums}
+.plan-row p{margin:0;color:var(--ink);font-size:13px;line-height:1.65}
+.plan-row strong{font-weight:650}
+.redline{margin-top:11px;padding:10px 11px;border-left:2px solid #b38a47;background:var(--amber-soft);color:#5f481f;font-size:13px;line-height:1.65}
+.redline strong{font-weight:650}
+
+.source-panel{}
+.source-intro{margin:0 0 8px;color:var(--muted);font-size:13px}
+.source-list{display:grid}
+.source-link{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid var(--rule);font-size:13px;line-height:1.45}
+.source-link:first-child{border-top:0}
+.source-link:hover .source-title{color:var(--red);text-decoration:underline;text-underline-offset:3px}
+.source-chapter{flex:none;min-width:40px;color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums}
+.source-title{color:var(--ink)}
+.privacy{margin-top:16px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.65}
+.page-foot{display:flex;justify-content:space-between;gap:18px;margin-top:19px;padding-top:12px;border-top:1px solid var(--line);color:var(--faint);font-size:12px}
+.page-foot a{color:var(--muted)}
+.toast{position:fixed;right:20px;bottom:18px;z-index:30;padding:9px 13px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font-size:13px}
+
+@media(max-width:1000px){
+  .app{grid-template-columns:220px minmax(0,1fr)}
+  .sheet{padding:23px 20px}
+  .work-grid{grid-template-columns:minmax(0,1fr) minmax(280px,.9fr)}
+}
+@media(max-width:760px){
+  .app{display:block;min-height:100vh}
+  .topbar{height:50px;padding:0 16px}
+  .menu-toggle{display:block}
+  .top-context{display:none}
+  .top-sep{display:none}
+  .top-actions{gap:13px}
+  .sidebar{position:fixed;z-index:22;top:50px;bottom:0;left:0;width:min(310px,88vw);min-height:0;overflow:auto;transform:translateX(-102%);transition:transform .2s ease;background:var(--frame);border-right:1px solid var(--line)}
+  .sidebar.open{transform:none}
+  .side-shade{position:fixed;inset:50px 0 0;z-index:21;display:block;background:#211a1880;opacity:0;pointer-events:none;transition:opacity .2s}
+  .side-shade.on{opacity:1;pointer-events:auto}
+  .sheet{min-height:calc(100vh - 50px);margin:0;padding:22px 17px 24px;border:0;border-radius:0}
+  .page-head{align-items:flex-start}
+  .demo-stamp{margin-top:21px}
+  .work-grid{grid-template-columns:minmax(0,1fr)}
+  .source-panel{order:4}
+  .plan-panel{order:3}
+  .reply-panel{order:2}
+  .input-panel{order:1}
+}
+@media(max-width:440px){
+  .topbar{gap:9px}
+  .brand{font-size:13px}
+  .top-actions{font-size:12px}
+  .sheet{padding:18px}
+  .page-head{display:block;margin-bottom:16px}
+  .demo-stamp{display:inline-block;margin-top:10px}
+  h1{font-size:22px}
+  .panel{padding:15px 14px}
+  .scene-title{font-size:17px}
+  .tone-row{display:block}
+  .tone-row>span{display:block;margin-bottom:4px}
+  .tone-tabs{width:max-content;max-width:100%}
+  .tone-tab{padding-right:9px;padding-left:9px}
+  .page-foot{display:block}
+  .page-foot span+span{display:block;margin-top:5px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="scenario-nav">选择场景</button>
+    <a class="brand" href="./" aria-label="返回人情世故指南">
+      <span class="brand-mark" aria-hidden="true">人</span>
+      <span>人情世故指南</span>
+    </a>
+    <span class="top-sep" aria-hidden="true"></span>
+    <span class="top-context">场景应对演示</span>
+    <nav class="top-actions" aria-label="页面导航">
+      <a href="./">指南首页</a>
+      <a href="https://github.com/changxueyi/renqing-shigu" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="side-shade" id="side-shade" hidden></div>
+  <aside class="sidebar" id="scenario-nav" aria-label="选择沟通场景">
+    <p class="side-heading">选择一个接近的场景 · 10 个示例</p>
+    <div class="case-list" id="case-list"></div>
+    <div class="side-foot">
+      这里只帮助你把话说清楚，不替你操控别人。涉及安全、财物或法律风险时，先保护自己并核实事实。
+      <br><a href="./">返回完整指南</a>
+    </div>
+  </aside>
+
+  <main class="sheet">
+    <div class="content">
+      <header class="page-head">
+        <div>
+          <div class="crumb"><a href="./">人情世故指南</a> / 场景应对</div>
+          <h1>人际场景应对</h1>
+          <p class="page-sub">先理清边界，再找一句适合自己说的话。</p>
+        </div>
+        <div class="demo-stamp">演示版 · 本地运行</div>
+      </header>
+
+      <div class="work-grid">
+        <section class="panel input-panel" aria-labelledby="input-heading">
+          <div class="panel-head">
+            <div>
+              <div class="step-label">01 / 情境</div>
+              <h2 id="input-heading">把事情说具体</h2>
+            </div>
+            <button class="text-action" id="reset-example" type="button">恢复场景示例</button>
+          </div>
+          <div class="scene-label"><span class="scene-marker" aria-hidden="true"></span><span id="scene-category">职场合作</span></div>
+          <h3 class="scene-title" id="scene-title">同事临时找我接一项活</h3>
+          <label class="field-label" for="story">发生了什么？</label>
+          <textarea id="story" maxlength="1200" aria-describedby="privacy-hint char-count"></textarea>
+          <div class="field-note" id="privacy-hint">
+            <span>请隐去姓名、单位、手机号等个人信息。</span>
+            <span id="char-count" aria-live="polite">0 / 1200</span>
+          </div>
+          <div class="tone-row">
+            <span>表达力度</span>
+            <div class="tone-tabs" role="tablist" aria-label="选择表达力度">
+              <button class="tone-tab" type="button" role="tab" data-tone="soft" aria-selected="false">委婉</button>
+              <button class="tone-tab" type="button" role="tab" data-tone="clear" aria-selected="true">清晰</button>
+              <button class="tone-tab" type="button" role="tab" data-tone="firm" aria-selected="false">坚定</button>
+            </div>
+          </div>
+          <button class="primary" id="generate" type="button">整理应对建议</button>
+        </section>
+
+        <section class="panel reply-panel" aria-labelledby="reply-heading">
+          <div class="step-label">02 / 表达</div>
+          <div class="reply-head">
+            <h2 id="reply-heading">可以这样说</h2>
+            <button class="copy-btn" id="copy-reply" type="button">复制这段</button>
+          </div>
+          <p class="reply-context" id="reply-context">清晰表达边界，同时给出可承担的范围。</p>
+          <p class="reply-text" id="reply-text" aria-live="polite"></p>
+          <div class="reply-caption" id="reply-caption">建议表达，不替你做决定。</div>
+          <div class="followup">
+            <span class="followup-label">对方继续追问时</span>
+            <p class="followup-text" id="followup-text"></p>
+          </div>
+          <div class="live" id="live" aria-live="polite"></div>
+        </section>
+
+        <section class="panel plan-panel" aria-labelledby="plan-heading">
+          <div class="step-label">03 / 处理顺序</div>
+          <h2 id="plan-heading">先做什么</h2>
+          <div class="plan-list" id="plan-list"></div>
+          <div class="redline" id="redline"></div>
+        </section>
+
+        <section class="panel source-panel" aria-labelledby="source-heading">
+          <div class="step-label">04 / 对照原文</div>
+          <h2 id="source-heading">指南依据</h2>
+          <p class="source-intro">建议由对应条目支持；点击可回到指南核对上下文。</p>
+          <div class="source-list" id="source-list"></div>
+          <p class="privacy">演示内容由指南条目整理，不连接 AI、不上传或保存输入。遇到紧急危险，请优先离开现场并联系当地应急服务。</p>
+        </section>
+      </div>
+
+      <footer class="page-foot">
+        <span>演示数据为示例，不构成法律、医疗或心理咨询意见。</span>
+        <span>发现问题？欢迎在 <a href="https://github.com/changxueyi/renqing-shigu/issues" target="_blank" rel="noopener">GitHub 提交反馈</a>。</span>
+      </footer>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const CASES = [
+  {
+    id:'work-boundary', category:'职场合作', title:'同事临时找我接一项活',
+    keywords:['同事','临时','接活','帮忙','工作','任务','加活','分工'],
+    story:'同事临时把一项工作交给我，希望我今天下班前完成。但我手上已经有两项明确的截止任务，担心直接拒绝会影响合作。',
+    context:'先说明现有优先级，再把能帮的范围说清楚。',
+    replies:{
+      soft:'我今天要先完成手头两项有截止时间的工作，整项接下来可能会影响进度。如果你愿意，我可以先帮你看一下关键部分，或者我们一起请负责人确认优先级。',
+      clear:'我目前有两项既定任务要按时交付，今天不能整体接下这项工作。我可以在明天下午帮你看一小时；如果需要我优先处理，请和负责人确认调整哪项任务。',
+      firm:'这项工作目前不在我的任务安排里，我不能承诺今天完成。请由负责人明确调整分工和优先级后，我们再确认时间。'
+    },
+    followup:'如果确实要我先做，请负责人确认调整哪项任务和截止时间。',
+    steps:['先列出手头任务、截止时间和已确认的分工。','只承诺自己确实有空完成的部分，并说清时间。','如果优先级冲突，请负责人明确取舍，最好留一条书面确认。'],
+    redline:'不要为了显得好说话，先答应再拖延；也别在情绪上头时评价同事的动机。',
+    sources:[
+      ['第 19 章 · 第 5 条','同事找你帮忙：先看自己的活，帮得了说清范围，帮不了早说','19-5'],
+      ['第 4 章 · 第 6 条','拒绝领导分派的额外工作，说清现有任务和优先级','4-6']
+    ]
+  },
+  {
+    id:'borrow-money', category:'请求与拒绝', title:'亲友开口借钱，我不想借',
+    keywords:['借钱','借款','亲戚','亲友','朋友','转钱','周转','借我'],
+    story:'一位亲友开口借一笔钱，说很快就还。我不太愿意借，但担心拒绝后关系变僵。',
+    context:'不需要编理由；尽早说清，别让对方一直等。',
+    replies:{
+      soft:'我知道你最近不容易，不过这笔钱我这次确实安排不了，帮不上你。你尽早看看别的办法，别等我这边耽误时间。',
+      clear:'这次我不方便借钱给你，不是针对你。希望你理解，也请尽快按其他方案安排。',
+      firm:'这笔钱我不会借，请不要把我的答复当成暂缓。也请别再通过其他人来劝我。'
+    },
+    followup:'我知道你着急，但我的答复不会变；希望你尽快安排其他办法。',
+    steps:['先确定自己真实的决定，不用当场答复。','如果不借，就尽早明确说“不方便”，不要给模糊期限。','如果已经转账或涉及纠纷，保存转账记录和书面约定。'],
+    redline:'不要借超过自己承受能力的钱，也不要因压力替别人贷款、担保或提供账户。',
+    sources:[
+      ['第 4 章 · 第 4 条','借钱不想借，就说清楚「这次不方便」，别说「过两天」','4-4'],
+      ['第 28 章 · 第 14 条','借钱时没写借条：让对方用文字确认借款，再配上转账记录','28-14']
+    ]
+  },
+  {
+    id:'ask-help', category:'请求与拒绝', title:'我需要请人帮忙，怎么开口',
+    keywords:['请人','求人','帮忙','求助','请教','推荐','引荐','帮我'],
+    story:'我想请一位熟人帮忙看一份材料，但不知道怎么开口，也不想让对方觉得要花很多时间。',
+    context:'把请求讲完整，让对方容易判断，也保留拒绝空间。',
+    replies:{
+      soft:'你好，想请教你一件事。如果你这周方便的话，能不能帮我看一下材料里的这一部分？大概十分钟；最近忙的话也完全没关系。',
+      clear:'我在准备一份材料，想请你帮我看一下第三部分的逻辑，预计需要十分钟。我把背景和具体问题整理好了，你这周哪天方便？如果时间不合适，也请直接告诉我。',
+      firm:'我想请你帮我看一下这份材料的第三部分，预计十分钟。你可以根据自己的时间决定是否方便，不急着现在答复。'
+    },
+    followup:'如果这周不方便也没关系，我会再找其他办法，不需要勉强答应。',
+    steps:['先确认对方是否有能力帮、是否会让对方承担不合适的风险。','说清背景、具体请求、预计耗时和希望完成的时间。','材料先准备好；对方帮完后，反馈结果并具体致谢。'],
+    redline:'不要把请托包装成送礼或利益交换；涉及审批、职权或违规事项，按正式程序办理。',
+    sources:[
+      ['第 5 章 · 第 2 条','把请求说完整：要什么、为什么、什么时候、对方要做多少','5-2'],
+      ['第 5 章 · 第 3 条','把门槛降到最低：材料备齐、方案写好，对方只需拍板或动动手','5-3']
+    ]
+  },
+  {
+    id:'illegal-order', category:'职场合作', title:'领导要求我做不合规的事',
+    keywords:['领导','违规','违法','假账','改数据','不合规','签字','造假','审批'],
+    story:'领导让我跳过正常流程修改一项数据，并暗示先做了再补手续。我担心留下责任，但也怕直接顶撞。',
+    context:'聚焦流程、责任和书面依据，不做个人指责。',
+    replies:{
+      soft:'我担心这样处理和现有流程不一致，后续审计时责任不好说明。能不能先走正式审批，或者请合规同事确认一下需要哪些材料？',
+      clear:'这项操作我不能在没有正式审批的情况下执行。请把需求和依据通过流程确认，我会按合规结论配合处理。',
+      firm:'我不能修改数据或补做不真实的记录。请通过正式流程提出更正申请；相关沟通我会如实留存。'
+    },
+    followup:'在正式流程和依据确认之前，我不会修改数据或补做记录。',
+    steps:['不要先签字、改数据或删除记录。','用平静、具体的语言说明风险，要求走正式流程并保留沟通记录。','若持续施压或涉及重大风险，向合规、审计、人事等正式渠道求助；必要时咨询律师。'],
+    redline:'不要伪造材料、毁掉记录或私下报复。若涉及人身安全，先脱离危险。',
+    sources:[
+      ['第 18 章 · 第 10 条','领导要你做违法违规的事：明确拒绝、留下记录，不替人背锅','18-10'],
+      ['第 5 章 · 第 19 条','别人求你办违规的事，拒绝后也不要替他保密到害了自己','5-19'],
+      ['第 29 章 · 第 4 条','被索贿、没得到不正当利益的，不是行贿；但要尽快反映','29-4']
+    ]
+  },
+  {
+    id:'scapegoat', category:'职场合作', title:'会上被甩锅，怎么澄清',
+    keywords:['甩锅','背锅','推责','责任','会上','说是我','误会'],
+    story:'会议上有人把一项延期归到我负责，但此前没有这样的分工。我想澄清事实，又不想当场吵起来。',
+    context:'用时间、分工和记录说明事实，不反击、不评价动机。',
+    replies:{
+      soft:'我补充一下分工信息，避免大家理解不一致：上次确认的安排里，这部分由项目组跟进，我负责的是数据整理。我会把会议记录发出来，方便我们核对。',
+      clear:'我想澄清一下责任范围：根据周三确认的分工，我负责数据部分，这项交付由项目组跟进。相关纪要我会后发给大家核对。',
+      firm:'这项工作并非由我负责，我不能接受这个责任归属。我们先核对当时确认的分工记录，再决定后续安排。'
+    },
+    followup:'我们先以确认过的分工记录为准；如果安排有变化，请同步更新负责人和时间。',
+    steps:['先把当时的分工、时间点和可核验记录找出来。','当场只澄清与自己有关的事实，避免猜测对方动机。','会后用简短书面记录同步结论，必要时请负责人确认。'],
+    redline:'不要删改记录、公开传播无关隐私，也不要用辱骂或威胁回应。',
+    sources:[
+      ['第 19 章 · 第 7 条','被甩锅：当场用事实澄清，语气平和，事后补齐记录','19-7'],
+      ['第 19 章 · 第 6 条','合作的事情留痕：会议纪要、群消息确认，谁负责什么写清楚','19-6']
+    ]
+  },
+  {
+    id:'pressure', category:'关系自保', title:'对方用愧疚和威胁逼我答应',
+    keywords:['PUA','威胁','愧疚','道德绑架','不爱我','自伤','控制','操控','情绪勒索'],
+    story:'对方反复说“你不答应就是不在乎我”，还用分手或伤害自己来逼我做决定。我越来越不敢拒绝。',
+    context:'先暂停被迫作出的决定，再找可信任的人一起判断。',
+    replies:{
+      soft:'我听到你很难受，但我现在不能在被催促或威胁时作决定。我们先暂停这次讨论，等情绪平稳后再谈具体请求。',
+      clear:'我理解你不满意，但这件事我考虑过了，答案仍然是不行。请不要用伤害自己或结束关系来要求我改变决定。',
+      firm:'我不会在威胁或施压下答应这件事。现在我先结束对话，并联系可信任的人协助处理。'
+    },
+    followup:'我已经说明了决定，现在先暂停这段对话；有现实危险时我会联系外部帮助。',
+    steps:['把请求和对方的情绪分开，暂时不作重大决定。','记录发生的事情，找信任的人获得外部视角，避免被孤立。','若有跟踪、暴力或现实危险，先离开现场并联系警方或当地支持服务。'],
+    redline:'不要独自承担对方的自伤威胁，也不要以威胁、羞辱或报复回应。',
+    sources:[
+      ['第 30 章 · 第 4 条','情感勒索：用恐惧、义务和愧疚逼你就范','30-4'],
+      ['第 30 章 · 第 7 条','想从操控中脱身：记事实、找外援、定边界，必要时彻底离开','30-7']
+    ]
+  },
+  {
+    id:'urgent-transfer', category:'财物安全', title:'熟人突然发消息借钱并催我转账',
+    keywords:['转账','熟人','领导','急用钱','借钱','微信','语音','视频','验证码'],
+    story:'一个熟人账号突然发消息说急用钱，让我马上转账，还要求先别告诉别人。我不确定是不是本人。',
+    context:'不要在对方设定的紧迫感里转账；换渠道核实身份。',
+    replies:{
+      soft:'我收到消息了。为了避免转错，我先用之前保存的手机号打给你确认一下；确认后再回复。',
+      clear:'我不会只凭聊天消息转账。请通过你原来的号码和我通话确认，核实前我不会操作。',
+      firm:'我不会按这条消息转账，也不会提供验证码。若你确实需要帮助，请通过原有联系方式联系我。'
+    },
+    followup:'核实前我不会转账，也不会提供验证码；确认身份后再讨论是否能帮忙。',
+    steps:['先暂停转账，不点击陌生链接，不提供验证码或屏幕共享。','使用通讯录里原有号码等独立渠道联系本人，别用对方刚发来的新号码。','如果已经转账，立即联系银行并报警止付，保留聊天和转账记录。'],
+    redline:'“马上、保密、转账、验证码”同时出现时提高警惕。不要为了验证身份再向对方提供敏感信息。',
+    sources:[
+      ['第 30 章 · 第 18 条','冒充领导、熟人加你微信借钱：打电话核实','30-18'],
+      ['第 30 章 · 第 13 条','反诈的四条底线：来电不轻信，链接不乱点，信息不外泄，转账先核实','30-13']
+    ]
+  },
+  {
+    id:'decline-dinner', category:'请求与拒绝', title:'不想参加饭局，怎么拒绝',
+    keywords:['饭局','聚会','吃饭','不想去','不参加','应酬','聚餐','不想参加饭局','不想去饭局','拒绝饭局'],
+    story:'朋友提前约我参加一个饭局，但我最近需要休息，也不想去这次聚会。担心直接拒绝显得不给面子。',
+    context:'提前说、理由简短、态度明确，别让对方一直替你保留位置。',
+    replies:{
+      soft:'谢谢你想着我，这次饭局我就不参加了，最近想把时间留给休息和自己的安排。祝你们吃得开心，下次有合适的时间我们再约。',
+      clear:'这次我不去饭局了，最近确实不方便参加。提前和你说一声，免得你按我的位置安排；祝你们玩得开心。',
+      firm:'这次我不参加，也不需要再替我留位置。我的安排已经确定了，之后有合适的活动再联系。'
+    },
+    followup:'我理解你希望我参加，但这次决定不变；提前告诉你，是为了让你方便安排。',
+    steps:['尽量提前告知，不临近开始才失联或临时放鸽子。','理由说到足够清楚即可，不必编造复杂故事或反复解释。','如果有明确的人情事项，另行表达祝福或按约定处理，不用用到场替代所有关系维护。'],
+    redline:'不要为了面子透支健康、预算或安全；饮酒、夜间出行和陌生场所也要保留退出权。',
+    sources:[
+      ['第 4 章 · 第 7 条','不想参加的饭局和聚会，提前说，别临时放鸽子','4-7']
+    ]
+  },
+  {
+    id:'public-insult', category:'关系自保', title:'被领导当众辱骂，怎么处理',
+    keywords:['辱骂','骂我','羞辱','侮辱','当众批评','领导骂','公开骂','人格','被领导辱骂','领导辱骂','当众辱骂','当众羞辱'],
+    story:'领导在公开场合用侮辱性的语言指责我，其他同事也在场。我想维护自己，但又担心事后被继续针对。',
+    context:'把工作批评和人格侮辱分开，先稳住现场，再为后续留证。',
+    replies:{
+      soft:'如果是工作问题，请直接告诉我具体事项和改进要求。涉及个人的评价我希望先暂停，我们可以会后单独把事实和方案说清楚。',
+      clear:'我接受针对工作结果的具体批评，但不接受辱骂和人格侮辱。请回到事情本身；如果需要，我会后通过正式渠道沟通。',
+      firm:'请停止辱骂。工作问题可以按事实和流程讨论，但我不会继续接受这种对待。现在我先离开现场，后续通过正式渠道处理。'
+    },
+    followup:'我愿意处理具体工作问题，但不会在辱骂、威胁或公开羞辱的方式下继续沟通。',
+    steps:['先判断现场是否安全；有升级迹象时离开现场并寻求帮助。','尽快记录时间、地点、在场人员、原话和后续影响，保留合法取得的材料。','根据单位制度向人事、工会、纪检或其他正式渠道反映；涉及威胁、暴力或严重侵害时，咨询专业人士或联系当地部门。'],
+    redline:'不要用同样的辱骂、威胁或公开曝光进行反击；留证时注意隐私、证据合法性和自身安全。',
+    sources:[
+      ['第 28 章 · 第 13 条','被领导当众辱骂、人格侮辱：批评可以接，侮辱不必忍','28-13'],
+      ['第 28 章 · 第 1 条','被欺负时的顺序：先保安全，再留证据，最后维权','28-1']
+    ]
+  },
+  {
+    id:'forced-resignation', category:'职场合作', title:'被逼主动辞职，怎么保护自己',
+    keywords:['辞职','离职','被逼走','主动辞职','调岗','降薪','裁员','离开公司','辞退','被逼辞职','让我辞职','让我离职','辞职申请','离职申请'],
+    story:'公司或领导不断暗示我主动辞职，最近还出现了调岗、降薪和冷处理。我不想在压力下签字，但也不知道该先做什么。',
+    context:'先保留事实并索取书面方案，避免在催促下作出未充分考虑的决定。',
+    replies:{
+      soft:'我目前还没有决定主动离职。如果公司对岗位、薪酬或劳动关系有正式安排，请通过书面方式说明方案和依据，并给我时间核实后回复。',
+      clear:'我不会在压力下提交个人原因辞职申请。请把调岗、薪酬或解除劳动关系的具体方案书面发我，我核实后再按正式流程沟通。',
+      firm:'我先不签署尚未充分理解的辞职申请或解除文件。请提供完整文本和书面方案，并给我时间核实；我会根据合同和具体情况再回复。'
+    },
+    followup:'请把方案和完整文件发给我，我需要结合合同及实际情况核实后再回复。',
+    steps:['先保存劳动合同、工资记录、考勤、绩效、通知和沟通记录，按时间整理事实。','不要在催促下签署空白或尚未理解的文件；索取完整文本和副本，核对内容、日期及实际安排。','调岗、降薪或解除的合法性与后果取决于合同和具体事实；必要时向当地人社部门、工会或律师咨询，再决定如何处理。'],
+    redline:'不要删改公司资料、带走无权携带的信息或用威胁换取补偿；涉及个人信息和商业秘密时按权限处理。',
+    sources:[
+      ['第 21 章 · 第 9 条','被逼“主动辞职”：调岗降薪、冷处理，别写个人原因辞职信','21-9'],
+      ['第 21 章 · 第 7 条','被通知辞退：先别签字，问清理由和法律依据','21-7']
+    ]
+  }
+];
+
+const TONES = {
+  soft:{context:'先说明顾虑，不必马上答应。'},
+  clear:{context:'直接表达决定，并说明可执行的下一步。'},
+  firm:{context:'适用于边界被反复越过的情况。'}
+};
+const GENERIC = {
+  category:'自定义情境',
+  title:'先暂停，再说清自己的边界',
+  context:'没有找到高度匹配的演示场景，先提供一个通用表达框架。',
+  replies:{
+    soft:'我想先把情况了解清楚，现在不方便马上答应。请把具体事项和时间发我，我确认后再回复你。',
+    clear:'我目前不能直接承诺这件事。请先说明具体需要、时间和责任范围，我评估后给你明确答复。',
+    firm:'这件事我现在不能答应。请不要先按我已同意来安排；如果有正式需求，请通过明确的流程确认。'
+  },
+  followup:'如果对方继续催促，可以重复决定，不必不断增加解释。',
+  steps:['先给自己一点时间，不在被催促时仓促承诺。','只说可核实的事实、自己的决定和能承担的范围。','涉及安全、财物或法律风险时，保留记录并向可信任的人或专业渠道求助。'],
+  redline:'这只是通用沟通框架，不是对具体法律或人身风险的判断。',
+  sources:[]
+};
+
+const caseList=document.getElementById('case-list');
+const story=document.getElementById('story');
+const charCount=document.getElementById('char-count');
+const live=document.getElementById('live');
+let activeCase=CASES[0];
+let activeTone='clear';
+let toastTimer;
+
+function esc(value){
+  return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function renderCaseList(){
+  const categoryOrder=['职场合作','请求与拒绝','关系自保','财物安全'];
+  const ordered=CASES.slice().sort((a,b)=>categoryOrder.indexOf(a.category)-categoryOrder.indexOf(b.category));
+  let last='';
+  ordered.forEach((item,index)=>{
+    if(item.category!==last){
+      const label=document.createElement('p');
+      label.className='side-heading';
+      label.textContent=item.category;
+      caseList.appendChild(label);
+      last=item.category;
+    }
+    const button=document.createElement('button');
+    button.className='case-item';
+    button.type='button';
+    button.dataset.case=item.id;
+    button.setAttribute('aria-current',String(item.id===activeCase.id));
+    button.innerHTML=`<span class="case-no">${index+1}</span><span>${esc(item.title)}</span>`;
+    button.addEventListener('click',()=>selectCase(item));
+    caseList.appendChild(button);
+  });
+}
+function selectCase(item){
+  activeCase=item;
+  story.value=item.story;
+  charCount.textContent=`${story.value.length} / 1200`;
+  live.textContent='';
+  updateActiveNav();
+  renderOutput(item);
+  closeMenu();
+}
+function updateActiveNav(){
+  caseList.querySelectorAll('[data-case]').forEach(button=>{
+    button.setAttribute('aria-current',String(button.dataset.case===activeCase?.id));
+  });
+}
+function renderOutput(item){
+  const data=item||GENERIC;
+  document.getElementById('scene-category').textContent=data.category;
+  document.getElementById('scene-title').textContent=data.title;
+  document.getElementById('reply-context').textContent=data.context;
+  document.getElementById('reply-text').textContent=data.replies[activeTone];
+  document.getElementById('reply-caption').textContent=TONES[activeTone].context;
+  document.getElementById('followup-text').textContent=data.followup;
+  document.getElementById('plan-list').innerHTML=data.steps.map((step,index)=>
+    `<div class="plan-row"><span class="plan-num">${index+1}</span><p>${esc(step)}</p></div>`
+  ).join('');
+  document.getElementById('redline').innerHTML=`<strong>边界提醒：</strong>${esc(data.redline)}`;
+  const sourceList=document.getElementById('source-list');
+  if(data.sources.length){
+    sourceList.innerHTML=data.sources.map(([chapter,title,key])=>
+      `<a class="source-link" href="./#e-${key}"><span class="source-chapter">${esc(chapter)}</span><span class="source-title">${esc(title)}</span></a>`
+    ).join('');
+  }else{
+    sourceList.innerHTML='<div class="source-link"><span class="source-chapter">暂无</span><span class="source-title">可以先从左侧选择一个已有场景，查看对应条目。</span></div>';
+  }
+}
+function inferCase(text){
+  const normalized=text.toLowerCase();
+  let best=null, bestScore=0;
+  for(const item of CASES){
+    let score=0;
+    for(const word of item.keywords){
+      if(normalized.includes(word.toLowerCase())) score+=word.length>2?2:1;
+    }
+    if(score>bestScore){best=item;bestScore=score}
+  }
+  return bestScore>=2?best:null;
+}
+function generate(){
+  const text=story.value.trim();
+  if(!text){
+    live.textContent='先写一句发生了什么，或从左侧选择一个示例场景。';
+    story.focus();
+    return;
+  }
+  const match=inferCase(text);
+  if(match){
+    activeCase=match;
+    updateActiveNav();
+    renderOutput(match);
+    live.textContent=`已按「${match.title}」整理建议。`;
+  }else{
+    activeCase=null;
+    updateActiveNav();
+    renderOutput(null);
+    live.textContent='未匹配到现有场景，已切换为通用边界表达。';
+  }
+}
+function showToast(message){
+  const toast=document.getElementById('toast');
+  toast.textContent=message;
+  toast.hidden=false;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.hidden=true,2200);
+}
+async function copyReply(){
+  const text=document.getElementById('reply-text').textContent;
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast('回复已复制');
+  }catch{
+    const temp=document.createElement('textarea');
+    temp.value=text;
+    temp.setAttribute('readonly','');
+    temp.style.position='fixed';
+    temp.style.opacity='0';
+    document.body.appendChild(temp);
+    temp.select();
+    const copied=document.execCommand('copy');
+    temp.remove();
+    showToast(copied?'回复已复制':'当前浏览器不支持自动复制，请手动选择文字');
+  }
+}
+function closeMenu(){
+  document.getElementById('scenario-nav').classList.remove('open');
+  document.getElementById('side-shade').classList.remove('on');
+  document.getElementById('side-shade').hidden=true;
+  document.getElementById('menu-toggle').setAttribute('aria-expanded','false');
+}
+document.getElementById('menu-toggle').addEventListener('click',()=>{
+  const menu=document.getElementById('scenario-nav');
+  const shade=document.getElementById('side-shade');
+  const opening=!menu.classList.contains('open');
+  menu.classList.toggle('open',opening);
+  shade.hidden=!opening;
+  shade.classList.toggle('on',opening);
+  document.getElementById('menu-toggle').setAttribute('aria-expanded',String(opening));
+});
+document.getElementById('side-shade').addEventListener('click',closeMenu);
+document.getElementById('generate').addEventListener('click',generate);
+document.getElementById('copy-reply').addEventListener('click',copyReply);
+document.getElementById('reset-example').addEventListener('click',()=>{
+  if(activeCase) selectCase(activeCase);
+  else selectCase(CASES[0]);
+});
+story.addEventListener('input',()=>{
+  charCount.textContent=`${story.value.length} / 1200`;
+  live.textContent='';
+});
+document.querySelectorAll('.tone-tab').forEach(button=>{
+  button.addEventListener('click',()=>{
+    activeTone=button.dataset.tone;
+    document.querySelectorAll('.tone-tab').forEach(tab=>tab.setAttribute('aria-selected',String(tab===button)));
+    renderOutput(activeCase);
+  });
+});
+renderCaseList();
+selectCase(CASES[0]);
+</script>
+</body>
+</html>
